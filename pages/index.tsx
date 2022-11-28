@@ -1,21 +1,25 @@
+import { useState } from 'react';
+
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import {
-  Table,
-  TableHead,
-  TableBody,
-  TableFooter,
-  TableRow,
-  TableCell,
-} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
+import Member from './component/member';
+import SendForm from './component/sendForm';
+import Recieve from './component/recieve';
+
 const Home: NextPage = () => {
+  const [send, setSend] = useState(false);
+  const [recieve, setRecieve] = useState(false);
+  const openSend = () => setSend(true);
+  const closeSend = () => setSend(false);
+  const openRecieve = () => setRecieve(true);
+  const closeRecieve = () => setRecieve(false);
   return (
     <Box>
       <Head>
@@ -29,86 +33,7 @@ const Home: NextPage = () => {
           オダ近メダル管理フォーム
         </Typography>
         <Container maxWidth="md">
-          <Table sx={{ mx: 'auto', minWidth: 650 }} aria-label="medal table">
-            <TableHead>
-              <TableRow>
-                <TableCell>name</TableCell>
-                <TableCell>200km</TableCell>
-                <TableCell>300km</TableCell>
-                <TableCell>400km</TableCell>
-                <TableCell>600km</TableCell>
-                <TableCell>1000km</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell>片山(泰)</TableCell>
-                <TableCell>250 (-30)</TableCell>
-                <TableCell>120</TableCell>
-                <TableCell>54</TableCell>
-                <TableCell>67</TableCell>
-                <TableCell>23</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>片山(明)</TableCell>
-                <TableCell>13</TableCell>
-                <TableCell>2</TableCell>
-                <TableCell>4</TableCell>
-                <TableCell>0</TableCell>
-                <TableCell>0</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>矢野</TableCell>
-                <TableCell>25</TableCell>
-                <TableCell>16</TableCell>
-                <TableCell>23</TableCell>
-                <TableCell>64</TableCell>
-                <TableCell>0</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>後藤</TableCell>
-                <TableCell>44 (-20)</TableCell>
-                <TableCell>10</TableCell>
-                <TableCell>13</TableCell>
-                <TableCell>55</TableCell>
-                <TableCell>0</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>平松</TableCell>
-                <TableCell>30 (+50)</TableCell>
-                <TableCell>50</TableCell>
-                <TableCell>13</TableCell>
-                <TableCell>4</TableCell>
-                <TableCell>0</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>森脇</TableCell>
-                <TableCell>10</TableCell>
-                <TableCell>0</TableCell>
-                <TableCell>0</TableCell>
-                <TableCell>0</TableCell>
-                <TableCell>0</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>田中</TableCell>
-                <TableCell>30</TableCell>
-                <TableCell>0</TableCell>
-                <TableCell>21</TableCell>
-                <TableCell>11</TableCell>
-                <TableCell>0</TableCell>
-              </TableRow>
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TableCell>Total</TableCell>
-                <TableCell>XXX</TableCell>
-                <TableCell>XXX</TableCell>
-                <TableCell>XXX</TableCell>
-                <TableCell>XXX</TableCell>
-                <TableCell>XXX</TableCell>
-              </TableRow>
-            </TableFooter>
-          </Table>
+          <Member />
           <Box display="flex" my={3}>
             <Box mx={2}>
               <Link href="/trace">
@@ -121,11 +46,20 @@ const Home: NextPage = () => {
               </Link>
             </Box>
             <Box mx={2}>
-              <Button variant="outlined">メダル発送</Button>
+              <Button onClick={openSend} variant="outlined">
+                メダル発送
+              </Button>
+            </Box>
+            <Box mx={2}>
+              <Button onClick={openRecieve} variant="contained">
+                メダル受取
+              </Button>
             </Box>
           </Box>
         </Container>
       </Box>
+      <SendForm open={send} onClose={closeSend} />
+      <Recieve open={recieve} onClose={closeRecieve} />
     </Box>
   );
 };
