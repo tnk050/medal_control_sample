@@ -1,15 +1,26 @@
 import { useState } from 'react';
 
-import Modal, { ModalProps } from '@mui/material/Modal';
-import {
-  Box,
-  Typography,
-  Button,
-  Select,
-  TextField,
-  MenuItem,
-  SelectChangeEvent,
-} from '@mui/material';
+import { ModalProps } from '@mui/material/Modal';
+
+import TextField from '@mui/material/TextField';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import { Box, Typography, Button } from '@mui/material';
+
+import ModalBox from './modalBox';
+import ConfirmModal from './confirmModal';
+
+const members = [
+  { key: 'katayama_tai', name: '片山(泰)' },
+  { key: 'katayama_hal', name: '片山(明)' },
+  { key: 'yano', name: '矢野' },
+  { key: 'goto', name: '後藤' },
+  { key: 'hiramatsu', name: '平松' },
+  { key: 'moriwaki', name: '森脇' },
+  { key: 'tanaka', name: '田中' },
+];
+
+const distances = ['200', '300', '400', '600', '1000'];
 
 export default function SendForm(props: Omit<ModalProps, 'children'>) {
   const [member, setMember] = useState<string>('');
@@ -18,26 +29,22 @@ export default function SendForm(props: Omit<ModalProps, 'children'>) {
   const [dist, setDist] = useState<string>('');
   const handleDist = (e: SelectChangeEvent) =>
     setDist(e.target.value as string);
+
+  const [confirm, setConfirm] = useState(false);
+  const showConfirm = () => setConfirm(true);
+  const closeConfirm = () => {
+    setConfirm(false);
+    props.onClose!({}, 'backdropClick');
+  };
+
   return (
-    <Modal
+    <ModalBox
       {...props}
       aria-labelledby="medal-send-form"
       aria-describedby="medal-send-form"
+      width={400}
     >
-      <Box
-        sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 400,
-          bgcolor: 'background.paper',
-          border: '2px solid #000',
-          borderRadius: '16px',
-          boxShadow: 24,
-          p: 4,
-        }}
-      >
+      <>
         <Typography
           id="send-form-title"
           variant="h6"
@@ -49,23 +56,21 @@ export default function SendForm(props: Omit<ModalProps, 'children'>) {
         <Box my={2}>
           <Box my={1}>
             <Select value={member} onChange={handleMember} sx={{ width: 160 }}>
-              <MenuItem value="katayama_tai">片山(泰)</MenuItem>
-              <MenuItem value="katayama_hal">片山(明)</MenuItem>
-              <MenuItem value="yano">矢野</MenuItem>
-              <MenuItem value="goto">後藤</MenuItem>
-              <MenuItem value="hiramatsu">平松</MenuItem>
-              <MenuItem value="moriwaki">森脇</MenuItem>
-              <MenuItem value="tanaka">田中</MenuItem>
+              {members.map(({ key, name }) => (
+                <MenuItem key={key} value={key}>
+                  {name}
+                </MenuItem>
+              ))}
             </Select>
             さんに
           </Box>
           <Box my={1}>
             <Select value={dist} onChange={handleDist} sx={{ width: 120 }}>
-              <MenuItem value="200">200</MenuItem>
-              <MenuItem value="300">300</MenuItem>
-              <MenuItem value="400">400</MenuItem>
-              <MenuItem value="600">600</MenuItem>
-              <MenuItem value="1000">1000</MenuItem>
+              {distances.map((distance) => (
+                <MenuItem key={distance} value={distance}>
+                  {distance}
+                </MenuItem>
+              ))}
             </Select>
             kmメダルを
           </Box>
@@ -79,10 +84,20 @@ export default function SendForm(props: Omit<ModalProps, 'children'>) {
               <TextField variant="outlined" sx={{ width: 120 }} />
               枚送る。
             </Box>
-            <Button variant="contained">発送</Button>
+            <Button onClick={showConfirm} variant="contained">
+              発送
+            </Button>
           </Box>
         </Box>
-      </Box>
-    </Modal>
+        <ConfirmModal
+          open={confirm}
+          closeFunc={closeConfirm}
+          width={400}
+          type="send"
+          message="発送を通知しました。"
+          buttonMessage="OK"
+        />
+      </>
+    </ModalBox>
   );
 }

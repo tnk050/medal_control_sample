@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 
 import Member from './component/member';
 import SendForm from './component/sendForm';
-import Recieve from './component/recieve';
+import RecieveDialog from './component/recieveDialog';
 
 const Home: NextPage = () => {
   const [send, setSend] = useState(false);
@@ -59,7 +59,7 @@ const Home: NextPage = () => {
         </Container>
       </Box>
       <SendForm open={send} onClose={closeSend} />
-      <Recieve open={recieve} onClose={closeRecieve} />
+      <RecieveDialog open={recieve} onClose={closeRecieve} />
     </Box>
   );
 };

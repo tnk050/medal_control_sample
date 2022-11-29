@@ -15,6 +15,45 @@ import {
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
+const predictionList = [
+  {
+    date: '2022/12/18',
+    from: '片山(泰)',
+    to: '平松',
+    distance: '200km',
+    amount: '30',
+    fromAmount: '220',
+    toAmount: '60',
+  },
+  {
+    date: '2022/12/20',
+    from: '後藤',
+    to: '平松',
+    distance: '200km',
+    amount: '20',
+    fromAmount: '24',
+    toAmount: '80',
+  },
+  {
+    date: '2023/1/10',
+    from: '平松',
+    to: '販売',
+    distance: '200km',
+    amount: '75',
+    fromAmount: '5',
+    toAmount: '',
+  },
+  {
+    date: '2023/1/28',
+    from: '田中',
+    to: '販売',
+    distance: '400km',
+    amount: '30',
+    fromAmount: '-9',
+    toAmount: '',
+  },
+];
+
 const Prediction: NextPage = () => {
   return (
     <Box>
@@ -47,46 +86,35 @@ const Prediction: NextPage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell>2022/11/18</TableCell>
-                <TableCell>片山(泰)</TableCell>
-                <TableCell>→</TableCell>
-                <TableCell>平松</TableCell>
-                <TableCell>200km</TableCell>
-                <TableCell>30</TableCell>
-                <TableCell>220</TableCell>
-                <TableCell>60</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>2022/11/20</TableCell>
-                <TableCell>後藤</TableCell>
-                <TableCell>→</TableCell>
-                <TableCell>平松</TableCell>
-                <TableCell>200km</TableCell>
-                <TableCell>20</TableCell>
-                <TableCell>24</TableCell>
-                <TableCell>80</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>2022/12/03</TableCell>
-                <TableCell>平松</TableCell>
-                <TableCell>→</TableCell>
-                <TableCell>販売</TableCell>
-                <TableCell>200km</TableCell>
-                <TableCell>75</TableCell>
-                <TableCell>5</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>2022/12/10</TableCell>
-                <TableCell>田中</TableCell>
-                <TableCell>→</TableCell>
-                <TableCell>販売</TableCell>
-                <TableCell>200km</TableCell>
-                <TableCell>37</TableCell>
-                <TableCell sx={{ color: 'error.light' }}>-7</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
+              {predictionList.map(
+                ({
+                  date,
+                  from,
+                  to,
+                  distance,
+                  amount,
+                  fromAmount,
+                  toAmount,
+                }) => (
+                  <TableRow key={date + from + to}>
+                    <TableCell>{date}</TableCell>
+                    <TableCell>{from}</TableCell>
+                    <TableCell>→</TableCell>
+                    <TableCell>{to}</TableCell>
+                    <TableCell>{distance}</TableCell>
+                    <TableCell>{amount}</TableCell>
+                    <TableCell
+                      sx={{
+                        color:
+                          parseInt(fromAmount) < 0 ? 'error.light' : 'inherit',
+                      }}
+                    >
+                      {fromAmount}
+                    </TableCell>
+                    <TableCell>{toAmount}</TableCell>
+                  </TableRow>
+                )
+              )}
             </TableBody>
           </Table>
         </Container>

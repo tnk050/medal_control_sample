@@ -7,6 +7,17 @@ import {
   TableCell,
 } from '@mui/material';
 
+// prettier-ignore
+const members =[
+  {name:'片山(泰)','200':'250 (-30)','300':'120','400':'54','600':'67','1000':'23'},
+  {name:'片山(明)','200':'13','300':'2','400':'4','600':'0','1000':'0'},
+  {name:'矢野','200':'25','300':'16','400':'23','600':'64','1000':'0'},
+  {name:'後藤','200':'44 (-20)','300':'10','400':'13','600':'55','1000':'0'},
+  {name:'平松','200':'30 (+50)','300':'50','400':'13','600':'4','1000':'0'},
+  {name:'森脇','200':'10','300':'0','400':'0','600':'0','1000':'0'},
+  {name:'田中','200':'30','300':'0','400':'21','600':'11','1000':'0'},
+]
+
 export default function Member() {
   return (
     <Table sx={{ mx: 'auto', minWidth: 650 }} aria-label="medal table">
@@ -21,62 +32,16 @@ export default function Member() {
         </TableRow>
       </TableHead>
       <TableBody>
-        <TableRow>
-          <TableCell>片山(泰)</TableCell>
-          <TableCell>250 (-30)</TableCell>
-          <TableCell>120</TableCell>
-          <TableCell>54</TableCell>
-          <TableCell>67</TableCell>
-          <TableCell>23</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>片山(明)</TableCell>
-          <TableCell>13</TableCell>
-          <TableCell>2</TableCell>
-          <TableCell>4</TableCell>
-          <TableCell>0</TableCell>
-          <TableCell>0</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>矢野</TableCell>
-          <TableCell>25</TableCell>
-          <TableCell>16</TableCell>
-          <TableCell>23</TableCell>
-          <TableCell>64</TableCell>
-          <TableCell>0</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>後藤</TableCell>
-          <TableCell>44 (-20)</TableCell>
-          <TableCell>10</TableCell>
-          <TableCell>13</TableCell>
-          <TableCell>55</TableCell>
-          <TableCell>0</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>平松</TableCell>
-          <TableCell>30 (+50)</TableCell>
-          <TableCell>50</TableCell>
-          <TableCell>13</TableCell>
-          <TableCell>4</TableCell>
-          <TableCell>0</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>森脇</TableCell>
-          <TableCell>10</TableCell>
-          <TableCell>0</TableCell>
-          <TableCell>0</TableCell>
-          <TableCell>0</TableCell>
-          <TableCell>0</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>田中</TableCell>
-          <TableCell>30</TableCell>
-          <TableCell>0</TableCell>
-          <TableCell>21</TableCell>
-          <TableCell>11</TableCell>
-          <TableCell>0</TableCell>
-        </TableRow>
+        {members.map(({ name, ...medal }) => (
+          <TableRow key={name}>
+            <TableCell>{name}</TableCell>
+            <TableCell>{medal[200]}</TableCell>
+            <TableCell>{medal[300]}</TableCell>
+            <TableCell>{medal[400]}</TableCell>
+            <TableCell>{medal[600]}</TableCell>
+            <TableCell>{medal[1000]}</TableCell>
+          </TableRow>
+        ))}
       </TableBody>
       <TableFooter>
         <TableRow>

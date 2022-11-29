@@ -15,6 +15,27 @@ import {
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
+const traseList = [
+  {
+    date: '2022/11/08',
+    from: '田中',
+    to: '販売',
+    distance: '200km',
+    amount: '34',
+    fromAmount: '30',
+    toAmount: '',
+  },
+  {
+    date: '2022/10/25',
+    from: '片山(泰)',
+    to: '田中',
+    distance: '200km',
+    amount: '20',
+    fromAmount: '250',
+    toAmount: '64',
+  },
+];
+
 const Trace: NextPage = () => {
   return (
     <Box>
@@ -47,26 +68,28 @@ const Trace: NextPage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell>2022/11/08</TableCell>
-                <TableCell>田中</TableCell>
-                <TableCell>→</TableCell>
-                <TableCell>販売</TableCell>
-                <TableCell>200km</TableCell>
-                <TableCell>34</TableCell>
-                <TableCell>30</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>2022/10/25</TableCell>
-                <TableCell>片山(泰)</TableCell>
-                <TableCell>→</TableCell>
-                <TableCell>田中</TableCell>
-                <TableCell>200km</TableCell>
-                <TableCell>20</TableCell>
-                <TableCell>250</TableCell>
-                <TableCell>64</TableCell>
-              </TableRow>
+              {traseList.map(
+                ({
+                  date,
+                  from,
+                  to,
+                  distance,
+                  amount,
+                  fromAmount,
+                  toAmount,
+                }) => (
+                  <TableRow key={date + from + to}>
+                    <TableCell>{date}</TableCell>
+                    <TableCell>{from}</TableCell>
+                    <TableCell>→</TableCell>
+                    <TableCell>{to}</TableCell>
+                    <TableCell>{distance}</TableCell>
+                    <TableCell>{amount}</TableCell>
+                    <TableCell>{fromAmount}</TableCell>
+                    <TableCell>{toAmount}</TableCell>
+                  </TableRow>
+                )
+              )}
             </TableBody>
           </Table>
         </Container>
